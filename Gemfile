@@ -16,7 +16,6 @@ group :test do
   gem "rack-test", "~> 0.6.2"
   gem "rspec", "~> 2.11.0"
   gem "simplecov", "~> 0.6.4"
-  gem "simplecov", "~> 0.6.4"
 end
 
 group :development do
