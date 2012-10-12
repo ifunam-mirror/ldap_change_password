@@ -1,0 +1,16 @@
+.page-header
+  %h1= t('login.form.title')
+.login
+  %form{ :action => "/login", :method => "POST" }
+    .clearfix
+      %label{ :for => 'login' }= t('login.form.login')
+      .input
+        %input{ :type => "text", :name => "login", :class => "input-medium" }
+    .clearfix
+      %label{ :for => 'password'}= t('login.form.password')
+      .input
+        %input{ :type => "password", :name => "password", :class => "input-medium" }
+    .clearfix
+      = csrf_tag
+    .actions
+      %input{ :type => "submit", :value => t('actions.submit'), :class => "btn btn-primary" }

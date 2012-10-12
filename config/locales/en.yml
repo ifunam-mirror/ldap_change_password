@@ -1,0 +1,32 @@
+en:
+  login:
+    title: Authentication
+    form:
+      title: Authentication
+      login: Login
+      password: Password
+
+  dashboard:
+    title: Dashboard
+    show:
+      login: Login
+      fullname: Fullname
+      expiration_date: Expiration date
+      expiration_date_msg: Your password will expire in
+
+  change_password:
+    title: Change your password
+    flash:
+      success_msg: Your password was updated!
+      error_msg: Something was wrong!
+    form:
+      login: Login
+      current_password: Current password
+      password: New password
+      password_confirmation: New password confirmation
+
+  actions:
+    submit: Submit
+    cancel: Cancel
+    logout: Exit
+    change_password: Change password
