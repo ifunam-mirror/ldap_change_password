@@ -25,7 +25,7 @@ module LdapChangePassword
     use Rack::Flash, :accessorize => [:error, :notice, :success]
     enable :static
 
-    # Protection agaist Cross-site request forgery attack
+    # Protection agaist typical web attacks
     use Rack::Protection
     use Rack::Protection::AuthenticityToken
     use Rack::Protection::RemoteReferrer, :allow_empty_referrer => false
