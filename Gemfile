@@ -8,6 +8,7 @@ gem "activemodel", "~> 3.2.8"
 gem "configatron", "~> 2.9.1"
 gem "rack-flash3", "~> 1.0.1"
 gem "bcrypt-ruby"
+gem "rack-protection", "~> 1.2.0"
 gem "rack_csrf", "~> 2.4.0"
 gem "sinatra-i18n", "~> 0.1.0"
 

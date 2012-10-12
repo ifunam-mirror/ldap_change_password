@@ -74,6 +74,7 @@ DEPENDENCIES
   net-ldap (~> 0.3.1)
   pry (~> 0.9.10)
   rack-flash3 (~> 1.0.1)
+  rack-protection (~> 1.2.0)
   rack-test (~> 0.6.2)
   rack_csrf (~> 2.4.0)
   rspec (~> 2.11.0)

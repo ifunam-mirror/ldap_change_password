@@ -1,5 +1,6 @@
 require 'sinatra'
 require 'rack-flash'
+require 'rack/protection'
 require 'rack/csrf'
 require 'logger'
 require 'sinatra/i18n'
@@ -25,8 +26,12 @@ module LdapChangePassword
     enable :static
 
     # Protection agaist Cross-site request forgery attack
-    # use Rack::Csrf
-    #, :raise => true
+    use Rack::Protection
+    use Rack::Protection::AuthenticityToken
+    use Rack::Protection::RemoteReferrer, :allow_empty_referrer => false
+    use Rack::Protection::FormToken
+    use Rack::Csrf
+
     helpers do
       def csrf_token
         Rack::Csrf.csrf_token(env)
@@ -34,6 +39,10 @@ module LdapChangePassword
 
       def csrf_tag
         Rack::Csrf.csrf_tag(env)
+      end
+
+      def authenticity_token
+        %Q{<input type="hidden" name="authenticity_token" value="#{session[:csrf]}"/>}
       end
     end
 
@@ -76,12 +85,20 @@ module LdapChangePassword
 
     post '/change_password/?' do
       authorize!
-      if current_user.update_attributes(params)
+      if current_user.update_attributes(valid_params!)
         flash[:success] = t('change_password.flash.success_msg')
       else
         flash[:error] = t('change_password.flash.error_msg')
       end
       haml :change_password
+    end
+
+    private
+    def valid_params!
+      %w(password password_confirmation current_password).inject({}) do |hash, field_name|
+        hash[field_name] = params[field_name] if params.has_key? field_name
+        hash
+      end
     end
   end
 end

@@ -12,5 +12,6 @@
         %input{ :type => "password", :name => "password", :class => "input-medium" }
     .clearfix
       = csrf_tag
+      = authenticity_token
     .actions
       %input{ :type => "submit", :value => t('actions.submit'), :class => "btn btn-primary" }
