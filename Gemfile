@@ -11,6 +11,7 @@ gem "bcrypt-ruby"
 gem "rack-protection", "~> 1.2.0"
 gem "rack_csrf", "~> 2.4.0"
 gem "sinatra-i18n", "~> 0.1.0"
+gem "rubylibcrack", "~> 0.2.4"
 
 group :test do
   gem "rack-test", "~> 0.6.2"

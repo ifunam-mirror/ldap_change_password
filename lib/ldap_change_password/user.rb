@@ -10,6 +10,7 @@
 #
 require 'digest/sha1'
 require 'active_model'
+require 'rubylibcrack'
 module LdapChangePassword
   class User
 
@@ -53,7 +54,7 @@ module LdapChangePassword
     end
 
     def valid?
-      current_password_valid? and super
+      super and current_password_valid? and new_password_strong?
     end
 
     def save
@@ -102,6 +103,16 @@ module LdapChangePassword
       if password_was != password
         @ldap_entry.update_password(password)
       end
+    end
+
+    def new_password_strong?
+       pw = Cracklib::Password.new(password)
+       if pw.strong?
+          true
+       else
+          errors.add pw.message
+          false
+       end
     end
 
     def set_attr_readers!
