@@ -110,7 +110,7 @@ module LdapChangePassword
        if pw.strong?
           true
        else
-          errors.add pw.message
+          errors.add :password, pw.message
           false
        end
     end
