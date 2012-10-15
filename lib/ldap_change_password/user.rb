@@ -23,29 +23,16 @@ module LdapChangePassword
     class << self
       def find_by_login(login)
         @ldap_user = LdapChangePassword::LDAP::User.find_by_login(login)
-        entry_to_record(@ldap_user) unless @ldap_user.nil?
+        new(@ldap_user) unless @ldap_user.nil?
       end
 
       def authenticate?(login, password)
         @ldap_user = LdapChangePassword::LDAP::User.find_by_login(login)
         @ldap_user.authenticate?(password) unless @ldap_user.nil?
       end
-
-      def attributes(*names)
-        attr_accessor *names
-        define_attribute_methods names
-      end
-
-      private
-      def entry_to_record(entry)
-        record = new(:login => entry.login, :email => entry.email, :fullname => entry.fullname,
-                    :password => entry.password, :group => entry.group)
-        record.ldap_entry = entry
-        record
-      end
     end
 
-    attr_reader :login, :fullname, :email, :group, :expiration_date
+    attr_reader   :login, :fullname, :email, :group, :expiration_date
     attr_accessor :password, :current_password
     define_attribute_methods  [:password, :current_password]
     validates :password, :presence => true, :confirmation => true, :length => {:within => 6..40}
@@ -53,23 +40,9 @@ module LdapChangePassword
     class_attribute :_attributes
     self._attributes = []
 
-    def initialize(attributes={})
-      self.attributes=(attributes)
-      self
-    end
-
-    def ldap_entry=(entry)
+    def initialize(entry)
       @ldap_entry = entry
-    end
-
-    def attributes=(hash)
-      sanitize_for_mass_assignment(hash).each do |attribute, value|
-        self.instance_variable_set("@#{attribute}", value)
-        if [:password, :current_password].include? attribute
-          send("#{attribute}_will_change!")
-          self._attributes << attribute
-        end
-      end
+      set_attr_readers!
     end
 
     def attributes
@@ -80,8 +53,7 @@ module LdapChangePassword
     end
 
     def valid?
-      validates_current_password!
-      super
+      current_password_valid? and super
     end
 
     def save
@@ -91,15 +63,15 @@ module LdapChangePassword
     def update
       if valid?
         update_ldap_password!
-        return true
+        true
       else
-        return false
+        false
       end
     end
 
     def update_attributes(hash)
       sanitize_for_mass_assignment(hash).each do |attribute, value|
-        send("#{attribute}=", value)
+        instance_variable_set("@#{attribute}", value)
       end
       update
     end
@@ -117,15 +89,28 @@ module LdapChangePassword
       string.to_s.force_encoding('ascii').to_s
     end
 
-    def validates_current_password!
+    def current_password_valid?
       unless @ldap_entry.authenticate?(current_password)
         errors.add :current_password, "doesn't match"
+        false
+      else
+        true
       end
     end
 
     def update_ldap_password!
       if password_was != password
         @ldap_entry.update_password(password)
+      end
+    end
+
+    def set_attr_readers!
+      [:login, :fullname, :email, :group, :expiration_date, :password].each do |attr_name|
+        if @ldap_entry.respond_to? attr_name
+          self.instance_variable_set("@#{attr_name}", @ldap_entry.send(attr_name))
+          self._attributes << attr_name
+        end
+        self.password_will_change!
       end
     end
   end
