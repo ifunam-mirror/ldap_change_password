@@ -7,16 +7,17 @@
     %link{ :charset => "utf-8", :href => "/stylesheets/password_strength.css", :media => "screen", :rel => "stylesheet", :title => "no title", :type => "text/css" }/
     %script{ :src => "/javascripts/bootstrap.min.js", :type => "text/javascript" }
     %script{ :src => "/javascripts/jquery.min.js", :type => "text/javascript" }
+    %script{ :src => "/javascripts/application.js", :type => "text/javascript" }
   %body
-    - unless current_user.nil?
-      .container-fluid
-        .topbar
-          .fill
-            .container
-              %ul{:class => 'nav' }
-                %li
-                  %h2
-                    %a{ :href => "#{LdapChangePassword.app['site']['url']}" }= LdapChangePassword.app['site']['title']
+    .container-fluid
+      .topbar
+        .fill
+          .container
+            %ul{:class => 'nav' }
+              %li
+                %h2
+                  %a{ :href => "#{LdapChangePassword.app['site']['url']}" }= LdapChangePassword.app['site']['title']
+            - unless current_user.nil?
               %p{ :class => "pull-right" }
                 = current_user.login
                 &nbsp;|&nbsp;
@@ -24,8 +25,8 @@
     .container
       - [:success, :notice, :error].each do |key|
         - unless flash[key].nil?
-          %div{:class => "alert alert-#{key}"}
-            %a{:class => "close", :href => "#", 'data-dismiss' => "alert"} x
+          .alert{:class => "alert-#{key}"}
+            %button{:class => "close", 'data-dismiss' => "alert"} x
             = flash[key]
       .content
         =yield

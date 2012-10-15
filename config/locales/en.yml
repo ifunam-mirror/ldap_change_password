@@ -24,6 +24,9 @@ en:
       current_password: Current password
       password: New password
       password_confirmation: New password confirmation
+      password_hint: A minimum password length of 6 characters is required, including numbers, symbols and letters. The system recognizes capital and lower-case letters. Please, dont use passwords based on repetition, dictionary words, letter or number sequences, usernames, relative or pet names, romantic links (current or past), or biographical information (e.g., ID numbers, ancestors' names or dates).
+      password_example_label: Example
+      password_example: G4rf!3ld
 
   actions:
     submit: Submit

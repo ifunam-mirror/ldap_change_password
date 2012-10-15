@@ -85,7 +85,8 @@ module LdapChangePassword
 
     post '/change_password/?' do
       authorize!
-      if current_user.update_attributes(valid_params!)
+      @user = current_user
+      if @user.update_attributes(valid_params!)
         flash[:success] = t('change_password.flash.success_msg')
       else
         flash[:error] = t('change_password.flash.error_msg')
