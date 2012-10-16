@@ -1,7 +1,7 @@
 .page-header
   %h1= t('login.form.title')
 .login
-  %form{ :action => "/login", :method => "POST" }
+  %form{ :action => "/login", :method => "POST", 'accept-charset' => "UTF-8"  }
     .clearfix
       %b{ :for => 'login' }= t('login.form.login')
       .input
@@ -13,5 +13,6 @@
     .clearfix
       = csrf_tag
       = authenticity_token
+      = utf_tag
     .actions
       %input{ :type => "submit", :value => t('actions.submit'), :class => "btn btn-primary" }

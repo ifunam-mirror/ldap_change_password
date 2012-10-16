@@ -12,10 +12,10 @@
   .span5.last
     %h2= t('dashboard.show.fullname')
     = current_user.fullname
-  .span5
-    %h2= t('dashboard.show.expiration_date')
-    = t('dashboard.show.expiration_date_msg')
-    #counter
+  // .span5
+  //   %h2= t('dashboard.show.expiration_date')
+  //   = t('dashboard.show.expiration_date_msg')
+  //   #counter
   .span5
     %h2= t('change_password.title')
     %a{ :href => "/change_password", :class => 'btn btn-primary' }= t('actions.change_password')

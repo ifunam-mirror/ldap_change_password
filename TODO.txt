@@ -1,4 +1,3 @@
 * Write tests based on rspec and simplecov (based in a lot of mock
   objects, I don't want to use an ldap server).
-* Include support for better description of errors from the user model.
 * Get the account/password expiration from the ldap server.
