@@ -42,8 +42,11 @@ module LdapChangePassword
       end
 
       def authenticity_token
-        token = session[:csrf] ||= Rack::Protection::AuthenticityToken.new(env).random_string
-        %Q{<input type="hidden" name="authenticity_token" value="#{token}"/>}
+        session[:csrf] ||= Rack::Protection::AuthenticityToken.new(env).random_string
+      end
+
+      def authenticity_tag
+        %Q{<input type="hidden" name="authenticity_token" value="#{authenticity_token}"/>}
       end
 
       def utf_tag
