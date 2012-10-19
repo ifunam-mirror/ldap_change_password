@@ -2,8 +2,9 @@ module LdapChangePassword
   module LDAP
     class Adapter
       def initialize(config)
-        @connection = Net::LDAP.new(:host => config.host, :port => config.port,
-                                    :base => config.base, :encryption => config.ssl)
+        h = { :host => config.host, :port => config.port, :base => config.base }
+        h[:encryption] = { :method => :simple_tls } if config.ssl == true
+        @connection = Net::LDAP.new(h)
         @attribute = config.attribute || "uid"
         @config = config
         auth_as_admin!
@@ -34,8 +35,8 @@ module LdapChangePassword
       def find_by_login(login)
         auth_as_admin!
         @connection.search(:base => config_base,
-                          :filter => Net::LDAP::Filter.eq(@attribute, login),
-                          :return_result => true).first
+                           :filter => Net::LDAP::Filter.eq(@attribute, login),
+                           :return_result => true).first
       end
 
       def update_password(login, password)
