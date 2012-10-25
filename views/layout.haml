@@ -28,5 +28,6 @@
           .alert{:class => "alert-#{key}"}
             %button{:class => "close", 'data-dismiss' => "alert"} x
             = flash[key]
+          - break
       .content
         =yield
