@@ -87,7 +87,7 @@ module LdapChangePassword
 
     private
     def force_encoding(string)
-      string.to_s.force_encoding('ascii').to_s
+      string.to_s.force_encoding('utf-8').to_s
     end
 
     def current_password_valid?
