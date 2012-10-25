@@ -1,0 +1,35 @@
+es:
+  login:
+    title: Inicio de sesión
+    form:
+      title: Inicio de sesión
+      login: Usuario
+      password: Contraseña
+
+  dashboard:
+    title: Inicio
+    show:
+      login: Usuario
+      fullname: Nombre
+      expiration_date: Fecha de expiración
+      expiration_date_msg: Tu contraseña expirará en
+
+  change_password:
+    title: Cambia tu contraseña
+    flash:
+      success_msg: Tu contraseña fue actualizada!
+      error_msg: Algo fue incorrecto!
+    form:
+      login: Usuario
+      current_password: Contraseña actual
+      password: Nueva contraseña
+      password_confirmation: Confirmación de la nueva contraseña
+      password_hint: Se requiere una contraseña con una longitud mínima de 6 caracteres, incluyendo números, símbolos y letras. El sistema es sensible a letras mayúsculas y minúsculas. Por favor NO uses contraseñas basadas en simples secuencias de repetición, palabras del diccionario, nombres de usuario, nombres de mascotas, información de tu pareja o familiares, o información relacionada a cosas personales como el RFC, CRUP, fechas de nacimiento; etc.
+      password_example_label: Ejemplo
+      password_example: G4rf!3ld
+
+  actions:
+    submit: Entrar
+    cancel: Cancelar
+    logout: Salir
+    change_password: Cambiar contraseña
