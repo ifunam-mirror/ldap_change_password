@@ -12,6 +12,7 @@ module LdapChangePassword
     set :environment, LdapChangePassword.env
     set :root, File.join(File.dirname(__FILE__), '..', '..')
 
+    class ::Logger; alias_method :write, :<<; end
     enable :logging, :dump_errors, :raise_errors
     use Rack::CommonLogger, Logger.new("log/#{LdapChangePassword.env}.log")
 
