@@ -4,6 +4,7 @@ require 'rack/protection'
 require 'rack/csrf'
 require 'logger'
 require 'sinatra/i18n'
+require 'i18n'
 require 'sinatra_warden'
 
 module LdapChangePassword
@@ -56,8 +57,10 @@ module LdapChangePassword
     end
 
     # Internationalization
-    locale_file = File.join(root, 'config', 'locales', "#{LdapChangePassword.app['locale']}.yml")
+    locale = LdapChangePassword.app['locale']
+    locale_file = File.join(root, 'config', 'locales', "#{locale}.yml")
     if File.exist? locale_file
+      ::I18n.default_locale = locale.to_sym
       set :locales, locale_file
       register Sinatra::I18n
     end
